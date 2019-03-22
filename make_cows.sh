@@ -9,5 +9,6 @@ do
     filename=$(basename "$fullfilename")
     extension="${filename##*.}"
     filename="${filename%.*}"
-    img2xterm --cow "$fullfilename" "cows/$filename.cow"
+    echo "Now making $filename into a cow."
+    ruby cow.rb "$fullfilename" > "cows/$filename.cow"
 done

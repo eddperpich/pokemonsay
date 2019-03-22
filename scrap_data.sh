@@ -4,7 +4,7 @@
 # This script scraps some pokémon pictures from Bulbapedia.
 #
 
-bulbapedia_page_url="http://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number"
+bulbapedia_page_url="http://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number"
 bulbapedia_page_name="bulbapedia.html"
 scrap_folder="`pwd`/scrapped-data"
 
@@ -18,7 +18,7 @@ if [ ! -e "scrapped-data/bulbapedia.html" ]; then
 	echo "  > Downloaded."
 fi
 
-# Dear furure me,
+# Dear future me,
 #
 #   If you are in need to maintain this part of the code... I am
 # realy sorry for you (T.T). This was the best I could do... But
@@ -35,15 +35,12 @@ fi
 #   Again... I'm sorry for all the trouble. But I hope you will
 # grow stronger and may be able to turn this code into something
 # more readable.
-#
+# 
 #                                                     Kind regards,
 #                                           Yourself from the past.
 
-pokemon_images=$(
-	cat "$scrap_folder/$bulbapedia_page_name" | \
-	sed -nr 's;^.*<img alt="(.*)" src="(http://cdn.bulbagarden.net/upload/.*\.png)" width="40" height="40" />.*$;\1=\2;p' \
-)
-
+pokemon_images="$( cat "$scrap_folder/$bulbapedia_page_name" | perl -ne 'print "$1=http:$2\n" if m{.*<img alt="(.*)" src="(//cdn.bulbagarden.net/upload/.*\.png)" width="40" height="40"\s*/>.*$}')"
+echo "$pokemon_images"
 for line in $pokemon_images; do
 	pokemon_name="${line%=*}"
 	pokemon_url="${line#*=}"
