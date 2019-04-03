@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for image in ./scrapped-data/*.png
+for image in ./images/*.png
 do
 	# Mirror the image in the horizontal direction so
 	# that the pokemon will be looking to the right.
